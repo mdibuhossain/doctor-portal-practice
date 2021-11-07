@@ -1,5 +1,5 @@
 import { ConstructionOutlined } from '@mui/icons-material';
-import { Button, Container, Grid, TextField, Typography } from '@mui/material';
+import { Alert, Button, CircularProgress, Container, Grid, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -8,7 +8,7 @@ import login from '../images/login.png';
 
 const Login = () => {
     const [userData, setUserData] = useState({});
-    const { user, logIn } = useAuth();
+    const { user, logIn, isLoading, error } = useAuth();
     console.log(user);
 
     const handleData = (e) => {
@@ -54,6 +54,9 @@ const Login = () => {
                             <Link to='/register' style={{ textDecoration: 'none' }}>
                                 <Button variant="text" sx={{ width: 1 }}>Don't have an account?</Button>
                             </Link>
+                            {isLoading && <CircularProgress />}
+                            {user?.email && <Alert severity="success">Login successfully!</Alert>}
+                            {error && <Alert severity="error">{error}</Alert>}
                         </form>
                     </Grid>
                     <Grid item xs={12} md={6} >

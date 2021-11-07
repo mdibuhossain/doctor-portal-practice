@@ -1,4 +1,4 @@
-import { Button, Container, Grid, TextField, Typography } from '@mui/material';
+import { Alert, Button, CircularProgress, Container, Grid, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,7 +7,7 @@ import login from '../images/login.png';
 
 const Register = () => {
     const [userData, setUserData] = useState({});
-    const { user, userRegister, setError, error } = useAuth();
+    const { user, userRegister, setError, error, isLoading } = useAuth();
     const handleData = (e) => {
         const fieldName = e.target.name;
         const fieldValue = e.target.value;
@@ -28,7 +28,7 @@ const Register = () => {
             <Container>
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={6} sx={{ display: 'flex', alignItems: 'center' }} >
-                        <form onSubmit={handleLogIn}>
+                        {!isLoading && <form onSubmit={handleLogIn}>
                             <Typography variant="body1" sx={{ mb: 2 }}>
                                 Sign out
                             </Typography>
@@ -63,7 +63,10 @@ const Register = () => {
                             <Link to='/login' style={{ textDecoration: 'none' }}>
                                 <Button variant="text" sx={{ width: 1 }}>Already have an account?</Button>
                             </Link>
-                        </form>
+                            {isLoading && <CircularProgress />}
+                            {user?.email && <Alert severity="success">User Created successfully!</Alert>}
+                            {error && <Alert severity="error">{error}</Alert>}
+                        </form>}
                     </Grid>
                     <Grid item xs={12} md={6} >
                         <img style={{ margin: 'auto' }} src={login} alt="" />
