@@ -11,24 +11,27 @@ const useFirebase = () => {
 
     const auth = getAuth();
 
-    const userRegister = (email, password) => {
+    const userRegister = (email, password, history) => {
         setIsLoading(true);
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 setUser(userCredential.user);
                 setError('');
+                history.replace('/');
             })
             .catch((error) => {
                 setError(error.message);
             }).finally(() => setIsLoading(false))
     }
 
-    const logIn = (email, password) => {
+    const logIn = (email, password, location, history) => {
         setIsLoading(true);
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 setUser(userCredential.user);
                 setError('');
+                const destination = location?.state?.from || '/';
+                history.replace(destination);
             })
             .catch((error) => {
                 setError(error.message);

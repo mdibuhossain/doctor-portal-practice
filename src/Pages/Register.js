@@ -1,13 +1,15 @@
 import { Alert, Button, CircularProgress, Container, Grid, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useAuth } from '../Hooks/useAuth';
 import login from '../images/login.png';
 
 const Register = () => {
     const [userData, setUserData] = useState({});
     const { user, userRegister, setError, error, isLoading } = useAuth();
+    const location = useLocation();
+    const history = useHistory();
     const handleData = (e) => {
         const fieldName = e.target.name;
         const fieldValue = e.target.value;
@@ -17,7 +19,7 @@ const Register = () => {
     }
     const handleLogIn = (e) => {
         if (userData?.password === userData?.password2) {
-            userRegister(userData?.email, userData?.password);
+            userRegister(userData?.email, userData?.password, history);
         }
         else
             setError("Password doesn't match");
@@ -63,10 +65,10 @@ const Register = () => {
                             <Link to='/login' style={{ textDecoration: 'none' }}>
                                 <Button variant="text" sx={{ width: 1 }}>Already have an account?</Button>
                             </Link>
-                            {isLoading && <CircularProgress />}
-                            {user?.email && <Alert severity="success">User Created successfully!</Alert>}
-                            {error && <Alert severity="error">{error}</Alert>}
                         </form>}
+                        {isLoading && <CircularProgress />}
+                        {user?.email && <Alert severity="success">User Created successfully!</Alert>}
+                        {error && <Alert severity="error">{error}</Alert>}
                     </Grid>
                     <Grid item xs={12} md={6} >
                         <img style={{ margin: 'auto' }} src={login} alt="" />

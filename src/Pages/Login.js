@@ -2,14 +2,17 @@ import { ConstructionOutlined } from '@mui/icons-material';
 import { Alert, Button, CircularProgress, Container, Grid, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useAuth } from '../Hooks/useAuth';
 import login from '../images/login.png';
 
 const Login = () => {
     const [userData, setUserData] = useState({});
     const { user, logIn, isLoading, error } = useAuth();
-    console.log(user);
+    const location = useLocation();
+    const history = useHistory();
+
+
 
     const handleData = (e) => {
         const fieldName = e.target.name;
@@ -20,7 +23,7 @@ const Login = () => {
     }
 
     const handleLogIn = (e) => {
-        logIn(userData?.email, userData?.password)
+        logIn(userData?.email, userData?.password, location, history)
         e.preventDefault();
     }
     return (
