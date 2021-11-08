@@ -26,15 +26,15 @@ const rows = [
     createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-const UserAppointment = () => {
+const UserAppointment = ({ date }) => {
     const { user } = useAuth();
     const [appointmentList, setAppointmentList] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/appointments?email=${user.email}`)
+        fetch(`http://localhost:5000/appointments?email=${user.email}&date=${date.toLocaleDateString()}`)
             .then(res => res.json())
             .then(data => setAppointmentList(data))
-    }, [])
+    }, [date])
 
     console.log(appointmentList);
 
@@ -51,7 +51,7 @@ const UserAppointment = () => {
                 <TableBody>
                     {appointmentList.map((row) => (
                         <TableRow
-                            key={row.name}
+                            key={row._id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component="th" scope="row">{user.displayName}</TableCell>

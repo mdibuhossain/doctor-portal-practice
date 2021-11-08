@@ -9,7 +9,7 @@ import {
 const PrivateRoute = ({ children, ...rest }) => {
     const { isLoading, user } = useAuth();
     if (isLoading) {
-        return <CircularProgress />
+        return <CircularProgress sx={{ position: 'absolute', top: '50%', left: '50%' }} />
     }
     return (
         <Route
