@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useAuth } from '../Hooks/useAuth';
 import login from '../images/login.png';
+import Navigation from '../Components/Shared/Navigation';
 
 const Register = () => {
     const [userData, setUserData] = useState({});
@@ -26,65 +27,68 @@ const Register = () => {
         e.preventDefault();
     }
     return (
-        <Box>
-            <Container>
-                <Grid container spacing={2}>
-                    <Grid item xs={12} md={6} sx={{ display: 'flex', alignItems: 'center' }} >
-                        {!isLoading && <form onSubmit={handleLogIn}>
-                            <Typography variant="body1" sx={{ mb: 2 }}>
-                                Sign out
-                            </Typography>
-                            <TextField
-                                id="standard-basic"
-                                label="Enter Your Name"
-                                type="text"
-                                name="name"
-                                variant="standard"
-                                sx={{ width: 1, mb: 2 }}
-                                onChange={handleData}
-                            />
-                            <TextField
-                                id="standard-basic"
-                                label="Enter Email"
-                                type="email"
-                                name="email"
-                                variant="standard"
-                                sx={{ width: 1, mb: 2 }}
-                                onChange={handleData}
-                            />
-                            <TextField
-                                id="standard-basic"
-                                name="password"
-                                type="password"
-                                label="Enter Password"
-                                variant="standard"
-                                sx={{ width: 1, mb: 2 }}
-                                onChange={handleData}
-                            />
-                            <TextField
-                                id="standard-basic"
-                                name="password2"
-                                type="password"
-                                label="Confirm Password"
-                                variant="standard"
-                                sx={{ width: 1, mb: 5 }}
-                                onChange={handleData}
-                            />
-                            <Button type="submit" variant="contained" sx={{ width: 1 }}>Sign out</Button>
-                            <Link to='/login' style={{ textDecoration: 'none' }}>
-                                <Button variant="text" sx={{ width: 1 }}>Already have an account?</Button>
-                            </Link>
-                        </form>}
-                        {isLoading && <CircularProgress />}
-                        {user?.email && <Alert severity="success">User Created successfully!</Alert>}
-                        {error && <Alert severity="error">{error}</Alert>}
+        <>
+            <Navigation />
+            <Box>
+                <Container>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} md={6} sx={{ display: 'flex', alignItems: 'center' }} >
+                            {!isLoading && <form onSubmit={handleLogIn}>
+                                <Typography variant="body1" sx={{ mb: 2 }}>
+                                    Sign out
+                                </Typography>
+                                <TextField
+                                    id="standard-basic"
+                                    label="Enter Your Name"
+                                    type="text"
+                                    name="name"
+                                    variant="standard"
+                                    sx={{ width: 1, mb: 2 }}
+                                    onChange={handleData}
+                                />
+                                <TextField
+                                    id="standard-basic"
+                                    label="Enter Email"
+                                    type="email"
+                                    name="email"
+                                    variant="standard"
+                                    sx={{ width: 1, mb: 2 }}
+                                    onChange={handleData}
+                                />
+                                <TextField
+                                    id="standard-basic"
+                                    name="password"
+                                    type="password"
+                                    label="Enter Password"
+                                    variant="standard"
+                                    sx={{ width: 1, mb: 2 }}
+                                    onChange={handleData}
+                                />
+                                <TextField
+                                    id="standard-basic"
+                                    name="password2"
+                                    type="password"
+                                    label="Confirm Password"
+                                    variant="standard"
+                                    sx={{ width: 1, mb: 5 }}
+                                    onChange={handleData}
+                                />
+                                <Button type="submit" variant="contained" sx={{ width: 1 }}>Sign out</Button>
+                                <Link to='/login' style={{ textDecoration: 'none' }}>
+                                    <Button variant="text" sx={{ width: 1 }}>Already have an account?</Button>
+                                </Link>
+                            </form>}
+                            {isLoading && <CircularProgress />}
+                            {user?.email && <Alert severity="success">User Created successfully!</Alert>}
+                            {error && <Alert severity="error">{error}</Alert>}
+                        </Grid>
+                        <Grid item xs={12} md={6} >
+                            <img style={{ margin: 'auto' }} src={login} alt="" />
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} md={6} >
-                        <img style={{ margin: 'auto' }} src={login} alt="" />
-                    </Grid>
-                </Grid>
-            </Container>
-        </Box>
+                </Container>
+            </Box>
+        </>
     );
 };
 

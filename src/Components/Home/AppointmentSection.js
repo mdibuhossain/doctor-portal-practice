@@ -3,6 +3,7 @@ import { Box } from '@mui/system';
 import React from 'react';
 import doctor from '../../images/doctor.png'
 import appointmentBg from '../../images/appointment-bg.png'
+import { NavLink } from 'react-router-dom';
 
 const appointmentBgStyle = {
     background: `url(${appointmentBg})`,
@@ -30,7 +31,7 @@ const AppointmentSection = () => {
                             <Typography variant="body1" sx={{ margin: '30px 0', lineHeight: '40px', letterSpacing: '1.3' }}>
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ratione pariatur dolorem, reprehenderit ducimus voluptates consectetur ad culpa laborum nostrum assumenda incidunt
                             </Typography>
-                            <Button variant="contained">Learn more</Button>
+                            <NavLink to="/appointment" style={{ textDecoration: 'none' }}><Button variant="contained">Learn more</Button></NavLink>
                         </Box>
                     </Grid>
                 </Grid>
