@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import initAuth from '../Firebase/initAuth';
 
@@ -18,6 +18,7 @@ const useFirebase = () => {
                 setError('');
                 const newUser = { email, displayName: name };
                 setUser(newUser);
+                saveUser(email, name, "POST");
                 updateProfile(auth.currentUser, {
                     displayName: name
                 }).then(() => {
@@ -55,6 +56,22 @@ const useFirebase = () => {
         }).finally(() => setIsLoading(false))
     }
 
+    const signWithGoogle = (location, history) => {
+        setIsLoading(true);
+        const googleProvider = new GoogleAuthProvider();
+        signInWithPopup(auth, googleProvider)
+            .then((result) => {
+                const newUser = result.user;
+                setError('');
+                saveUser(newUser.email, newUser.displayName, "PUT");
+                setUser(newUser);
+                const destination = location?.state?.from || '/';
+                history.replace(destination);
+            })
+            .catch(error => setError(error.message))
+            .finally(() => setIsLoading(false))
+    }
+
     useEffect(() => {
         const unsubscribed = onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -67,6 +84,17 @@ const useFirebase = () => {
         return () => unsubscribed;
     }, [])
 
+    const saveUser = (email, displayName, method) => {
+        const user = { email, displayName };
+        fetch('http://localhost:5000/users', {
+            method: method,
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        }).then()
+    }
+
     return {
         user,
         logIn,
@@ -74,7 +102,8 @@ const useFirebase = () => {
         userRegister,
         error,
         setError,
-        isLoading
+        isLoading,
+        signWithGoogle
     }
 
 }

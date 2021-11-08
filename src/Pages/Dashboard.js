@@ -15,9 +15,11 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Grid } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import Celender from '../Components/Shared/Celender';
 import UserAppointment from '../Components/Dashboard/UserAppointment';
+import { useAuth } from '../Hooks/useAuth';
+import { NavLink } from 'react-router-dom';
 
 const drawerWidth = 200;
 
@@ -25,6 +27,7 @@ function Dashboard(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [date, setDate] = React.useState(new Date());
+  const { logOut } = useAuth();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -72,6 +75,12 @@ function Dashboard(props) {
           <Typography variant="h6" noWrap component="div">
             Dashboard
           </Typography>
+          <Box sx={{ marginLeft: 'auto' }}>
+            <NavLink style={{ textDecoration: 'none', color: 'white' }} to="/">
+              <Button color="inherit">Home</Button>
+            </NavLink>
+            <Button onClick={logOut} color="inherit">Logout</Button>
+          </Box>
         </Toolbar>
       </AppBar>
       <Box

@@ -8,7 +8,7 @@ import Navigation from '../Components/Shared/Navigation';
 
 const Register = () => {
     const [userData, setUserData] = useState({});
-    const { user, userRegister, setError, error, isLoading } = useAuth();
+    const { user, userRegister, setError, error, isLoading, signWithGoogle } = useAuth();
     const location = useLocation();
     const history = useHistory();
     const handleData = (e) => {
@@ -32,7 +32,7 @@ const Register = () => {
             <Box>
                 <Container>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} md={6} sx={{ display: 'flex', alignItems: 'center' }} >
+                        <Grid item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} >
                             {!isLoading && <form onSubmit={handleLogIn}>
                                 <Typography variant="body1" sx={{ mb: 2 }}>
                                     Sign out
@@ -77,13 +77,15 @@ const Register = () => {
                                 <Link to='/login' style={{ textDecoration: 'none' }}>
                                     <Button variant="text" sx={{ width: 1 }}>Already have an account?</Button>
                                 </Link>
+                                <Typography sx={{ textAlign: 'center' }}>--------------------------</Typography>
+                                <Button onClick={() => signWithGoogle(location, history)} variant="contained" sx={{ width: 1 }}>Sign with Google</Button>
                             </form>}
                             {isLoading && <CircularProgress />}
                             {user?.email && <Alert severity="success">User Created successfully!</Alert>}
                             {error && <Alert severity="error">{error}</Alert>}
                         </Grid>
                         <Grid item xs={12} md={6} >
-                            <img style={{ margin: 'auto' }} src={login} alt="" />
+                            <img style={{ margin: 'auto', width: '100%' }} src={login} alt="" />
                         </Grid>
                     </Grid>
                 </Container>

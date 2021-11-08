@@ -8,7 +8,7 @@ import Navigation from '../Components/Shared/Navigation';
 
 const Login = () => {
     const [userData, setUserData] = useState({});
-    const { user, logIn, isLoading, error } = useAuth();
+    const { user, logIn, isLoading, error, signWithGoogle } = useAuth();
     const location = useLocation();
     const history = useHistory();
 
@@ -59,6 +59,8 @@ const Login = () => {
                                 <Link to='/register' style={{ textDecoration: 'none' }}>
                                     <Button variant="text" sx={{ width: 1 }}>Don't have an account?</Button>
                                 </Link>
+                                <Typography sx={{ textAlign: 'center' }}>--------------------------</Typography>
+                                <Button onClick={() => signWithGoogle(location, history)} variant="contained" sx={{ width: 1 }}>Sign with Google</Button>
                                 {isLoading && <CircularProgress />}
                                 {user?.email && <Alert severity="success">Login successfully!</Alert>}
                                 {error && <Alert severity="error">{error}</Alert>}
