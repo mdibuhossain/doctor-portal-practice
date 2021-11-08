@@ -19,7 +19,7 @@ const Register = () => {
     }
     const handleLogIn = (e) => {
         if (userData?.password === userData?.password2) {
-            userRegister(userData?.email, userData?.password, history);
+            userRegister(userData?.name, userData?.email, userData?.password, history);
         }
         else
             setError("Password doesn't match");
@@ -34,6 +34,15 @@ const Register = () => {
                             <Typography variant="body1" sx={{ mb: 2 }}>
                                 Sign out
                             </Typography>
+                            <TextField
+                                id="standard-basic"
+                                label="Enter Your Name"
+                                type="text"
+                                name="name"
+                                variant="standard"
+                                sx={{ width: 1, mb: 2 }}
+                                onChange={handleData}
+                            />
                             <TextField
                                 id="standard-basic"
                                 label="Enter Email"

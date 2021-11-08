@@ -3,9 +3,12 @@ import { Box } from '@mui/system';
 import React from 'react';
 import BookingModal from './BookingModal';
 
-const Booking = ({ appointment, date }) => {
+const Booking = ({ appointment, date, setBookingSuccesful }) => {
     const [openBooking, setOpenBooking] = React.useState(false);
-    const handleOpen = () => setOpenBooking(true);
+    const handleOpen = () => {
+        setOpenBooking(true);
+        setBookingSuccesful(false);
+    };
     const handleClose = () => setOpenBooking(false);
     return (
         <>
@@ -31,6 +34,7 @@ const Booking = ({ appointment, date }) => {
                 handleOpen={handleOpen}
                 handleClose={handleClose}
                 openBooking={openBooking}
+                setBookingSuccesful={setBookingSuccesful}
             />
         </>
     );
