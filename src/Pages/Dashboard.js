@@ -51,7 +51,7 @@ function Dashboard(props) {
   let { path, url } = useRouteMatch();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const { logOut } = useAuth();
+  const { logOut, admin } = useAuth();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -62,7 +62,6 @@ function Dashboard(props) {
       <Toolbar />
       <Divider />
       <List>
-        <Link to={`${url}/makeadmin`} >MAke Admn</Link>
         {dashboardMenu.map((menu, index) => (
           <Link key={index} to={`${url}${menu.to && `/${menu.to}`}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <ListItem button>
@@ -73,6 +72,23 @@ function Dashboard(props) {
             </ListItem>
           </Link>
         ))}
+      </List>
+      <Divider />
+      <List>
+        <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}>
+          <ListItem button>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItem>
+        </Link>
+        <ListItem button onClick={logOut}>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Log out" />
+        </ListItem>
       </List>
     </div >
   );
@@ -102,12 +118,6 @@ function Dashboard(props) {
           <Typography variant="h6" noWrap component="div">
             Dashboard
           </Typography>
-          <Box sx={{ marginLeft: 'auto' }}>
-            <NavLink style={{ textDecoration: 'none', color: 'white' }} to="/">
-              <Button color="inherit">Home</Button>
-            </NavLink>
-            <Button onClick={logOut} color="inherit">Logout</Button>
-          </Box>
         </Toolbar>
       </AppBar>
       <Box

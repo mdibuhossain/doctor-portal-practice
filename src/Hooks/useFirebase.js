@@ -8,6 +8,7 @@ const useFirebase = () => {
     const [user, setUser] = useState({});
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(true);
+    const [admin, setAdmin] = useState(false);
 
     const auth = getAuth();
 
@@ -72,6 +73,17 @@ const useFirebase = () => {
             .finally(() => setIsLoading(false))
     }
 
+    const saveUser = (email, displayName, method) => {
+        const user = { email, displayName };
+        fetch('http://localhost:5000/users', {
+            method: method,
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        }).then()
+    }
+
     useEffect(() => {
         const unsubscribed = onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -84,16 +96,13 @@ const useFirebase = () => {
         return () => unsubscribed;
     }, [])
 
-    const saveUser = (email, displayName, method) => {
-        const user = { email, displayName };
-        fetch('http://localhost:5000/users', {
-            method: method,
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        }).then()
-    }
+    useEffect(() => {
+        fetch(`http://localhost:5000/users/${user.email}`)
+            .then(res => res.json())
+            .then(data => {
+                setAdmin(data?.admin);
+            })
+    }, [user.email])
 
     return {
         user,
@@ -103,7 +112,8 @@ const useFirebase = () => {
         error,
         setError,
         isLoading,
-        signWithGoogle
+        signWithGoogle,
+        admin
     }
 
 }
