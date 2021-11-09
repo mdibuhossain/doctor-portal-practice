@@ -16,8 +16,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Button, Grid } from '@mui/material';
-import Celender from '../Components/Shared/Celender';
-import UserAppointment from '../Components/Dashboard/UserAppointment';
 import { useAuth } from '../Hooks/useAuth';
 import {
   BrowserRouter as Router,
@@ -28,6 +26,9 @@ import {
   useRouteMatch,
   NavLink
 } from "react-router-dom";
+import DashboardHome from '../Components/Dashboard/DashboardHome';
+import AddDoctor from '../Components/Dashboard/AddDoctor';
+import MakeAdmin from '../Components/Dashboard/MakeAdmin';
 
 const dashboardMenu = [
   {
@@ -50,7 +51,6 @@ function Dashboard(props) {
   let { path, url } = useRouteMatch();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [date, setDate] = React.useState(new Date());
   const { logOut } = useAuth();
 
   const handleDrawerToggle = () => {
@@ -62,9 +62,10 @@ function Dashboard(props) {
       <Toolbar />
       <Divider />
       <List>
+        <Link to={`${url}/makeadmin`} >MAke Admn</Link>
         {dashboardMenu.map((menu, index) => (
-          <Link to={`${url}${menu.to && `/${menu.to}`}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <ListItem button key={index}>
+          <Link key={index} to={`${url}${menu.to && `/${menu.to}`}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItem button>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
@@ -146,16 +147,19 @@ function Dashboard(props) {
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
-        <Box>
-          <Grid container spacing={2}>
-            <Grid item xs={12} lg={6}>
-              <Celender date={date} setDate={setDate} />
-            </Grid>
-            <Grid item xs={12} lg={6}>
-              <UserAppointment date={date} />
-            </Grid>
-          </Grid>
-        </Box>
+        {/* <Box> */}
+        <Switch>
+          <Route exact path={path}>
+            <DashboardHome />
+          </Route>
+          <Route exact path={`${path}/makeadmin`}>
+            <MakeAdmin />
+          </Route>
+          <Route exact path={`${path}/adddoctor`}>
+            <AddDoctor />
+          </Route>
+        </Switch>
+        {/* </Box> */}
       </Box>
     </Box>
   );

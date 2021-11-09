@@ -36,8 +36,6 @@ const UserAppointment = ({ date }) => {
             .then(data => setAppointmentList(data))
     }, [date])
 
-    console.log(appointmentList);
-
     return (
         <TableContainer component={Paper}>
             <Table aria-label="Appointment table">
