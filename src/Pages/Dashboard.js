@@ -62,16 +62,34 @@ function Dashboard(props) {
       <Toolbar />
       <Divider />
       <List>
-        {dashboardMenu.map((menu, index) => (
-          <Link key={index} to={`${url}${menu.to && `/${menu.to}`}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <ListItem button>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={menu.name} />
-            </ListItem>
-          </Link>
-        ))}
+        <Link to={`${url}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <ListItem button>
+            <ListItemIcon>
+              <MailIcon />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+          </ListItem>
+        </Link>
+        {
+          admin && <Box>
+            <Link to={`${url}/makeadmin`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <ListItem button>
+                <ListItemIcon>
+                  <MailIcon />
+                </ListItemIcon>
+                <ListItemText primary="Make Admin" />
+              </ListItem>
+            </Link>
+            <Link to={`${url}/adddoctor`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <ListItem button>
+                <ListItemIcon>
+                  <MailIcon />
+                </ListItemIcon>
+                <ListItemText primary="Add Doctor" />
+              </ListItem>
+            </Link>
+          </Box>
+        }
       </List>
       <Divider />
       <List>
