@@ -19,11 +19,35 @@ import { Button, Grid } from '@mui/material';
 import Celender from '../Components/Shared/Celender';
 import UserAppointment from '../Components/Dashboard/UserAppointment';
 import { useAuth } from '../Hooks/useAuth';
-import { NavLink } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useRouteMatch,
+  NavLink
+} from "react-router-dom";
+
+const dashboardMenu = [
+  {
+    name: 'Dashboard',
+    to: ''
+  },
+  {
+    name: 'Make Admin',
+    to: 'makeadmin'
+  },
+  {
+    name: 'Add Doctor',
+    to: 'adddoctor'
+  }
+]
 
 const drawerWidth = 200;
 
 function Dashboard(props) {
+  let { path, url } = useRouteMatch();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [date, setDate] = React.useState(new Date());
@@ -38,16 +62,18 @@ function Dashboard(props) {
       <Toolbar />
       <Divider />
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
+        {dashboardMenu.map((menu, index) => (
+          <Link to={`${url}${menu.to && `/${menu.to}`}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItem button key={index}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={menu.name} />
+            </ListItem>
+          </Link>
         ))}
       </List>
-    </div>
+    </div >
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
