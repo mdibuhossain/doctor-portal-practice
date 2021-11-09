@@ -1,9 +1,12 @@
-import { Button, TextField, Typography } from '@mui/material';
+import { Alert, Button, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
+import { useAuth } from '../../Hooks/useAuth';
 
 const MakeAdmin = () => {
     const [email, setEmail] = useState('');
+    const [makeAdminSuccessfully, setMakeAdminSuccessfully] = useState(false);
+    const { token } = useAuth();
     const handleOnChange = (e) => {
         setEmail(e.target.value);
     }
@@ -12,6 +15,7 @@ const MakeAdmin = () => {
         fetch('http://localhost:5000/users/admin', {
             method: 'PUT',
             headers: {
+                'authorization': `Bearer ${token}`,
                 'content-type': 'application/json'
             },
             body: JSON.stringify(user)
@@ -19,6 +23,10 @@ const MakeAdmin = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
+                if (data.modifiedCount){
+                    setMakeAdminSuccessfully(true);
+                    setEmail('');
+                }
             })
         e.preventDefault();
     }
@@ -31,6 +39,9 @@ const MakeAdmin = () => {
                 <Box sx={{ display: 'flex' }}>
                     <TextField onChange={handleOnChange} label="Email" variant="standard" />
                     <Button type="submit" variant="contained">Make Admin</Button>
+                    {
+                        makeAdminSuccessfully && <Alert severity="success">Admin successfully made</Alert>
+                    }
                 </Box>
             </form>
         </Box >

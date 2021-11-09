@@ -29,6 +29,7 @@ import {
 import DashboardHome from '../Components/Dashboard/DashboardHome';
 import AddDoctor from '../Components/Dashboard/AddDoctor';
 import MakeAdmin from '../Components/Dashboard/MakeAdmin';
+import AdminRoute from '../PrivateRoute/AdminRoute';
 
 const dashboardMenu = [
   {
@@ -180,12 +181,12 @@ function Dashboard(props) {
           <Route exact path={path}>
             <DashboardHome />
           </Route>
-          <Route exact path={`${path}/makeadmin`}>
+          <AdminRoute exact path={`${path}/makeadmin`}>
             <MakeAdmin />
-          </Route>
-          <Route exact path={`${path}/adddoctor`}>
+          </AdminRoute>
+          <AdminRoute exact path={`${path}/adddoctor`}>
             <AddDoctor />
-          </Route>
+          </AdminRoute>
         </Switch>
         {/* </Box> */}
       </Box>
