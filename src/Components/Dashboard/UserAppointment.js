@@ -27,11 +27,15 @@ const rows = [
 ];
 
 const UserAppointment = ({ date }) => {
-    const { user } = useAuth();
+    const { user, token } = useAuth();
     const [appointmentList, setAppointmentList] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/appointments?email=${user.email}&date=${date.toLocaleDateString()}`)
+        fetch(`http://localhost:5000/appointments?email=${user.email}&date=${date.toLocaleDateString()}`, {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        })
             .then(res => res.json())
             .then(data => setAppointmentList(data))
     }, [date])
