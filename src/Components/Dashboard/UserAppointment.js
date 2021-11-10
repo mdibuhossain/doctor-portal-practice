@@ -31,7 +31,7 @@ const UserAppointment = ({ date }) => {
     const [appointmentList, setAppointmentList] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/appointments?email=${user.email}&date=${date.toLocaleDateString()}`, {
+        fetch(`https://mighty-chamber-50806.herokuapp.com/appointments?email=${user.email}&date=${date.toLocaleDateString()}`, {
             headers: {
                 'authorization': `Bearer ${token}`
             }
